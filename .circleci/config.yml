@@ -1,0 +1,28 @@
+version: '2.1'
+
+jobs:
+
+  build:
+    docker:
+      - image: timfeirg/lain:latest
+        auth:
+          username: timfeirg
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+         name: "build"
+         command: |
+           mkdir ~/.kube
+           touch ~/.kube/kubeconfig-test
+           lain use test || true
+           lain init -f
+           docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+           lain build --push
+
+workflows:
+  version: 2.1
+  tests:
+    jobs:
+      - build
