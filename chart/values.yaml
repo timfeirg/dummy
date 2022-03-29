@@ -1,0 +1,37 @@
+appname: dummy
+
+deployments:
+  oom:
+    replicaCount: 1
+    podSecurityContext: {}
+    resources:
+      limits:
+        cpu: 100m
+        memory: 8Mi
+      requests:
+        cpu: 10m
+        memory: 8Mi
+    command: ["/lain/app/oom.py"]
+  celery:
+    replicaCount: 1
+    podSecurityContext: {}
+    resources:
+      limits:
+        cpu: 100m
+        memory: 800Mi
+      requests:
+        cpu: 10m
+        memory: 80Mi
+    command: ["celery", "-A", "tasks", "worker", "--loglevel=DEBUG"]
+
+labels: {}
+build:
+  base: python:latest
+  prepare:
+    keep:
+    - treasure.txt
+    script:
+    - pip3 install -r requirements.txt
+    - echo "treasure" > treasure.txt
+  script:
+  - pip3 install -r requirements.txt

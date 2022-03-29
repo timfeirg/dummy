@@ -1,0 +1,18 @@
+jobs:
+  init:
+    initContainers:
+    - name: dummy-init-container
+      command:
+      - echo
+      - HRTsdtErm
+    imagePullPolicy: Always
+    command:
+    - bash
+    - -c
+    - echo nothing >> README.md
+cronjobs:
+  nothing:
+    schedule: 0 0 * * *
+    command:
+    - echo
+    - HRTsdtErm
