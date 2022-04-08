@@ -1,5 +1,8 @@
 .ropeproject
 __pycache__
-chart
 .DS_Store
 .envrc
+chart/values.yaml
+chart/Chart.yaml
+chart/index.yaml
+chart/templates
